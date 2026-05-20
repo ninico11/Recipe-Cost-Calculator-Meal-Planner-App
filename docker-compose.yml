@@ -1,0 +1,55 @@
+# Set the Docker Compose file format version.
+version: "3.9"
+
+# Define all containers that belong to this application.
+services:
+  # Define the backend API service.
+  backend:
+    # Tag the backend image with the same name used by Kubernetes manifests.
+    image: recipe-meal-backend:latest
+    # Build the backend image from the backend folder.
+    build:
+      # Use the backend folder as the Docker build context.
+      context: ./backend
+    # Name the running backend container for easier identification.
+    container_name: recipe-meal-backend
+    # Set environment variables used by the backend container.
+    environment:
+      # Store the SQLite database in the mounted data volume.
+      DB_PATH: /data/meal_planner.db
+    # Mount a named volume so SQLite data survives container restarts.
+    volumes:
+      # Attach the named volume to the backend data folder.
+      - backend-data:/data
+    # Publish backend port 8000 to the host for direct API testing if needed.
+    ports:
+      # Map host port 8000 to container port 8000.
+      - "8000:8000"
+
+  # Define the frontend web service.
+  frontend:
+    # Tag the frontend image with the same name used by Kubernetes manifests.
+    image: recipe-meal-frontend:latest
+    # Build the frontend image from the frontend folder.
+    build:
+      # Use the frontend folder as the Docker build context.
+      context: ./frontend
+      # Pass build arguments needed by the frontend Dockerfile.
+      args:
+        # Use the Nginx reverse-proxy path for API calls inside the browser.
+        VITE_API_URL: /api
+    # Name the running frontend container for easier identification.
+    container_name: recipe-meal-frontend
+    # Publish frontend port 80 to port 8080 on the host machine.
+    ports:
+      # Map host port 8080 to container port 80.
+      - "8080:80"
+    # Start the frontend only after the backend container is started.
+    depends_on:
+      # Declare the backend service dependency.
+      - backend
+
+# Define named volumes used by the application.
+volumes:
+  # Create a named volume for persistent backend data.
+  backend-data:

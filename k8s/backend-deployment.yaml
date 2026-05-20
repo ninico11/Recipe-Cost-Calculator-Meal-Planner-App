@@ -1,0 +1,53 @@
+# Use the apps API group because Deployment belongs there.
+apiVersion: apps/v1
+# Declare that this file creates a Deployment.
+kind: Deployment
+# Define metadata for the backend deployment.
+metadata:
+  # Set the deployment name.
+  name: backend
+  # Put the deployment in the project namespace.
+  namespace: recipe-app
+# Define how the backend pods should run.
+spec:
+  # Run a single backend replica because this project uses SQLite.
+  replicas: 1
+  # Select pods that match the backend label.
+  selector:
+    matchLabels:
+      app: backend
+  # Define the pod template used by this deployment.
+  template:
+    # Add labels to the pods so the service can target them.
+    metadata:
+      labels:
+        app: backend
+    # Define the containers that run inside the pod.
+    spec:
+      containers:
+        # Create the backend container definition.
+        - name: backend
+          # Use the local image built from the backend Dockerfile.
+          image: recipe-meal-backend:latest
+          # Use the local image if it exists and only pull when it is missing.
+          imagePullPolicy: IfNotPresent
+          # Expose the FastAPI port inside the pod.
+          ports:
+            - containerPort: 8000
+          # Pass environment variables into the container.
+          env:
+            # Tell the app where to store the SQLite database file.
+            - name: DB_PATH
+              value: /data/meal_planner.db
+          # Mount persistent storage into the container.
+          volumeMounts:
+            # Attach the named volume to the /data folder used by SQLite.
+            - name: backend-data
+              mountPath: /data
+      # Declare the volumes available to the pod.
+      volumes:
+        # Define the volume that uses the PVC created separately.
+        - name: backend-data
+          persistentVolumeClaim:
+            # Reference the backend PVC by name.
+            claimName: backend-data-pvc

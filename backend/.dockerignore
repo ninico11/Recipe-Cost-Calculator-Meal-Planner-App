@@ -1,0 +1,8 @@
+# Ignore the local virtual environment because the image installs its own dependencies.
+.venv/
+# Ignore Python cache folders because they are generated automatically.
+__pycache__/
+# Ignore nested Python cache folders for the same reason.
+app/__pycache__/
+# Ignore the local SQLite file because the container will use its own mounted data path.
+meal_planner.db

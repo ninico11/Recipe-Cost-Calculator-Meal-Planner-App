@@ -1,0 +1,8 @@
+# Create a dedicated namespace so all project resources stay grouped together.
+apiVersion: v1
+# Declare that this file creates a basic Kubernetes object.
+kind: Namespace
+# Define metadata for the namespace resource.
+metadata:
+  # Set the namespace name used by the rest of the manifests.
+  name: recipe-app

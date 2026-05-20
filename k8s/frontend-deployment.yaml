@@ -1,0 +1,36 @@
+# Use the apps API group because Deployment belongs there.
+apiVersion: apps/v1
+# Declare that this file creates a Deployment.
+kind: Deployment
+# Define metadata for the frontend deployment.
+metadata:
+  # Set the deployment name.
+  name: frontend
+  # Put the deployment in the project namespace.
+  namespace: recipe-app
+# Define how the frontend pods should run.
+spec:
+  # Run a single frontend replica for the laboratory demo.
+  replicas: 1
+  # Select pods that match the frontend label.
+  selector:
+    matchLabels:
+      app: frontend
+  # Define the pod template used by this deployment.
+  template:
+    # Add labels to the pods so the service can target them.
+    metadata:
+      labels:
+        app: frontend
+    # Define the containers that run inside the pod.
+    spec:
+      containers:
+        # Create the frontend container definition.
+        - name: frontend
+          # Use the local image built from the frontend Dockerfile.
+          image: recipe-meal-frontend:latest
+          # Use the local image if it exists and only pull when it is missing.
+          imagePullPolicy: IfNotPresent
+          # Expose the Nginx port inside the pod.
+          ports:
+            - containerPort: 80

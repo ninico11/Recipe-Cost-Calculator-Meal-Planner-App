@@ -1,0 +1,4 @@
+# Ignore installed frontend packages because the image installs them itself.
+node_modules/
+# Ignore the local production build output because Docker will create a fresh one.
+dist/

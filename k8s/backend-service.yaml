@@ -1,0 +1,23 @@
+# Use the core API group for Service resources.
+apiVersion: v1
+# Declare that this file creates a Service.
+kind: Service
+# Define metadata for the backend service.
+metadata:
+  # Set the service name to `backend` so Nginx can reach it by DNS.
+  name: backend
+  # Put the service in the same namespace as the backend deployment.
+  namespace: recipe-app
+# Define how traffic should reach backend pods.
+spec:
+  # Use an internal service because only the frontend needs direct access.
+  type: ClusterIP
+  # Select the backend pods created by the deployment.
+  selector:
+    app: backend
+  # Define the service ports.
+  ports:
+    # Expose one HTTP port for the FastAPI application.
+    - port: 8000
+      # Forward traffic to port 8000 inside the backend pod.
+      targetPort: 8000

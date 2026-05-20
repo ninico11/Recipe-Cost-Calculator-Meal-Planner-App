@@ -1,0 +1,25 @@
+# Use the core API group for Service resources.
+apiVersion: v1
+# Declare that this file creates a Service.
+kind: Service
+# Define metadata for the frontend service.
+metadata:
+  # Set the service name.
+  name: frontend
+  # Put the service in the same namespace as the frontend deployment.
+  namespace: recipe-app
+# Define how traffic should reach frontend pods.
+spec:
+  # Use NodePort so the app can be opened from the browser on the host machine.
+  type: NodePort
+  # Select the frontend pods created by the deployment.
+  selector:
+    app: frontend
+  # Define the service ports.
+  ports:
+    # Expose the frontend service on port 80 inside the cluster.
+    - port: 80
+      # Forward traffic to port 80 inside the frontend pod.
+      targetPort: 80
+      # Expose a fixed host-accessible Kubernetes NodePort for easier demo access.
+      nodePort: 30080

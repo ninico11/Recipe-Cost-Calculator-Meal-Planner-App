@@ -1,0 +1,19 @@
+# Use the core API group for persistent storage claims.
+apiVersion: v1
+# Declare that this file creates a PersistentVolumeClaim.
+kind: PersistentVolumeClaim
+# Define metadata for the storage claim.
+metadata:
+  # Set the PVC name that the backend deployment will mount.
+  name: backend-data-pvc
+  # Place the PVC inside the project namespace.
+  namespace: recipe-app
+# Define the requested storage details.
+spec:
+  # Allow the volume to be mounted by a single node in read-write mode.
+  accessModes:
+    - ReadWriteOnce
+  # Request a small amount of storage, enough for a demo SQLite database.
+  resources:
+    requests:
+      storage: 1Gi

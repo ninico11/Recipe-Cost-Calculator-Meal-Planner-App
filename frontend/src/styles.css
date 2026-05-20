@@ -1,0 +1,270 @@
+:root {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #14213d;
+  background:
+    radial-gradient(circle at top right, rgba(247, 127, 0, 0.18), transparent 22%),
+    linear-gradient(180deg, #fffaf2 0%, #f6f2ea 100%);
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  border: none;
+  border-radius: 999px;
+  background: #f77f00;
+  color: #ffffff;
+  cursor: pointer;
+  padding: 0.8rem 1.2rem;
+  transition: transform 120ms ease, opacity 120ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  transform: none;
+}
+
+.button-secondary {
+  background: #dbe7f5;
+  color: #17324d;
+}
+
+.button-danger {
+  background: #c44536;
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid #d8dfeb;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 0.9rem 1rem;
+}
+
+.page-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+}
+
+.hero h1 {
+  margin: 0.2rem 0 0.75rem;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1;
+}
+
+.hero-copy {
+  max-width: 56ch;
+  margin: 0;
+  color: #3c4a5d;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.8rem;
+  color: #f77f00;
+  margin: 0;
+}
+
+.summary-card,
+.panel,
+.status-banner,
+.day-card,
+.list-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(20, 33, 61, 0.08);
+  box-shadow: 0 22px 48px rgba(20, 33, 61, 0.08);
+}
+
+.summary-card {
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 28px;
+  padding: 1.5rem;
+}
+
+.summary-card span,
+.summary-card small {
+  color: #5d6b80;
+}
+
+.summary-card strong {
+  font-size: 2rem;
+}
+
+.status-banner {
+  border-radius: 18px;
+  padding: 0.9rem 1rem;
+  margin: 0 0 1.5rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.panel {
+  border-radius: 28px;
+  padding: 1.4rem;
+}
+
+.panel-full {
+  grid-column: 1 / -1;
+}
+
+.panel h2 {
+  margin-top: 0;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.table-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.list-card {
+  border-radius: 22px;
+  padding: 1rem;
+}
+
+.list-card h3,
+.day-card h3 {
+  margin: 0 0 0.35rem;
+}
+
+.list-card p,
+.day-card p,
+.day-card small {
+  margin: 0;
+  color: #536275;
+}
+
+.list-card-wide p {
+  margin-bottom: 0.75rem;
+}
+
+.recipe-builder {
+  display: grid;
+  gap: 0.75rem;
+  background: #f7f9fc;
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+.section-header,
+.recipe-title-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.recipe-row,
+.planner-form {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  gap: 0.75rem;
+}
+
+.ingredient-breakdown {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: #536275;
+}
+
+.meal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.day-card {
+  border-radius: 22px;
+  padding: 1rem;
+  min-height: 160px;
+}
+
+.day-card span {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #f77f00;
+}
+
+.empty-state {
+  color: #7a8798;
+}
+
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    flex-direction: column;
+  }
+
+  .recipe-row,
+  .planner-form {
+    grid-template-columns: 1fr;
+  }
+
+  .meal-grid {
+    grid-template-columns: 1fr;
+  }
+}
