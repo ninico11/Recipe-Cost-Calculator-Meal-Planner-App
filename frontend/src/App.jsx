@@ -180,7 +180,7 @@ function App() {
       <header className="hero">
         <div>
           <p className="eyebrow">Laboratory App</p>
-          <h1>Recipe Cost Calculator & Meal Planner</h1>
+          <h1>Recipe Cost Calculator & Meal Planners</h1>
           <p className="hero-copy">
             Track ingredient prices, build recipes, calculate cost per serving, and organize a weekly meal plan.
           </p>
