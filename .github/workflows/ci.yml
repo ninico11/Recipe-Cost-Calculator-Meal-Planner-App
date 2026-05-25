@@ -1,47 +1,78 @@
+# Set the name shown in the GitHub Actions interface.
 name: CI
 
+# Define the events that trigger this workflow.
 on:
+  # Run the workflow on every push to the main branch.
   push:
     branches: [main]
+  # Run the workflow on every pull request targeting the main branch.
   pull_request:
     branches: [main]
 
+# Define all jobs that belong to this workflow.
 jobs:
+  # Create one job that installs dependencies, builds the app, and builds Docker images.
   build-and-check:
+    # Use the latest Ubuntu runner provided by GitHub.
     runs-on: ubuntu-latest
 
+    # List the steps executed inside this job.
     steps:
+      # Download the repository code into the runner.
       - name: Checkout repository
+        # Use the official GitHub checkout action.
         uses: actions/checkout@v4
 
+      # Prepare a Python environment for the backend.
       - name: Set up Python
+        # Use the official action for installing Python.
         uses: actions/setup-python@v5
         with:
+          # Select the Python version used by the backend project.
           python-version: "3.12"
 
+      # Install backend dependencies from requirements.txt.
       - name: Install backend dependencies
+        # Run this step inside the backend folder.
         working-directory: backend
         run: |
+          # Upgrade pip before installing packages.
           python -m pip install --upgrade pip
+          # Install all backend dependencies required by FastAPI.
           pip install -r requirements.txt
 
+      # Prepare a Node.js environment for the frontend.
       - name: Set up Node.js
+        # Use the official action for installing Node.js.
         uses: actions/setup-node@v4
         with:
+          # Select the Node.js version used for the frontend build.
           node-version: "22"
 
+      # Install frontend dependencies from package-lock.json.
       - name: Install frontend dependencies
+        # Run this step inside the frontend folder.
         working-directory: frontend
+        # Use npm ci for a clean and reproducible installation.
         run: npm ci
 
+      # Build the frontend production bundle.
       - name: Build frontend
+        # Run the frontend build command inside the frontend folder.
         working-directory: frontend
+        # Execute the Vite production build.
         run: npm run build
         env:
+          # Provide a backend URL value required at build time by Vite.
           VITE_API_URL: http://127.0.0.1:8000
 
+      # Build the Docker image for the backend service.
       - name: Build backend Docker image
+        # Create the backend image with the same tag used in local Docker and Kubernetes.
         run: docker build -t recipe-meal-backend:latest ./backend
 
+      # Build the Docker image for the frontend service.
       - name: Build frontend Docker image
+        # Create the frontend image and pass the API path used behind Nginx in containers.
         run: docker build -t recipe-meal-frontend:latest --build-arg VITE_API_URL=/api ./frontend
